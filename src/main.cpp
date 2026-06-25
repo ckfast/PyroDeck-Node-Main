@@ -42,9 +42,15 @@ void loop() {
   protocol.update();
 
   controller.update();
-  
-  // Update UI with current state
-  NodeState state = controller.getStatus();
-  ui.update(&state);
+
+  // Rate-limit UI refresh — OLED I2C renders take 10-30ms and must not
+  // starve the RS485 receive loop between packets.
+  static uint32_t lastUIUpdate = 0;
+  const uint32_t now = millis();
+  if ((uint32_t)(now - lastUIUpdate) >= OLED_REFRESH_RATE) {
+    lastUIUpdate = now;
+    NodeState state = controller.getStatus();
+    ui.update(&state);
+  }
 
 }

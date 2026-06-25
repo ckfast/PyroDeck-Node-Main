@@ -5,7 +5,7 @@
 extern const char* NODE_FIRMWARE_VERSION;
 
 const uint16_t HEARTBEAT_INTERVAL = 1000;
-const uint32_t HEARTBEAT_TIMEOUT_MS = 5000;
+const uint32_t HEARTBEAT_TIMEOUT_MS = 3000;
 
 const uint8_t OLED_REFRESH_RATE = 100;
 

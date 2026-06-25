@@ -62,11 +62,6 @@ void FiringController::update() {
         if(channelFired == true && thisMillis > fireStartTime + duration) {
 
             channelFired = false;
-            {
-                char buffer[32];
-                snprintf(buffer, sizeof(buffer), "Channel %u set to OFF", i + 1);
-                DebugManager::println(buffer);
-            }
         }
         
         uint8_t pin = FIRING_CHANNEL_PINS[i];

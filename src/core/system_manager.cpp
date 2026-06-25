@@ -43,9 +43,6 @@ bool SystemManager::disarm() {
 }
 
 SystemManager::FireResult SystemManager::requestFire(uint8_t channel) {
-    _continuityController.update();
-    _continuityMask = _continuityController.getContinuityMask();
-
     if (channel == 0 || channel > sizeof(FIRING_CHANNEL_PINS)) {
         DebugManager::println("ERROR: INVALID CHANNEL");
         _lastError = static_cast<uint8_t>(FireResult::InvalidChannel);
@@ -145,6 +142,9 @@ void SystemManager::update() {
 
     if (_online && (millis() - _lastHeartbeatAt) > HEARTBEAT_TIMEOUT_MS) {
         _online = false;
+        disarm();
+        _faultManager.recordFault(FaultManager::FaultType::SystemError);
+        DebugManager::println("ERROR: HEARTBEAT TIMEOUT");
     }
 
     _continuityController.update();

@@ -46,15 +46,6 @@ bool parsePacket(
     uint8_t receivedCRC = 
         buffer[size - 1];  
 
-    uint8_t calculatedCRC =
-        calculateCRC(&buffer[1], size - 2);
-
-    DebugManager::print("Received CRC: 0x");
-    DebugManager::println(receivedCRC, HEX);
-
-    DebugManager::print("Calculated CRC: 0x");
-    DebugManager::println(calculatedCRC, HEX);
-
     if(!verifyCRC(&buffer[1], size - 2, receivedCRC)) {
         DebugManager::println("Packet Parse Failed due incorrect CRC");
         return false;
@@ -120,8 +111,6 @@ bool packetParser::poll() {
             expectedLength = buffer[4] + PACKET_OVERHEAD_BYTES;
 
             if(index >= expectedLength) {
-
-                DebugManager::println("=== Got full message! ===");
 
                 bool result =
                     parsePacket(buffer,

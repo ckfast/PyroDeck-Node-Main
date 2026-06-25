@@ -7,7 +7,7 @@ RS485Bus::RS485Bus(HardwareSerial& port, uint8_t dePin) {
     driverEnablePin = dePin;
 
     busClearTimeoutMs = 5;
-    busIdleWindowMs = 2;
+    busIdleWindowMs = 1;
 }
 
 void RS485Bus::begin(uint32_t baud, uint16_t config) {

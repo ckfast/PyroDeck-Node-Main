@@ -91,20 +91,18 @@ void Protocol::processPacket(const Packet& pkt) {
 }
 
 void Protocol::logPacket(const Packet& packet) const {
-    DebugManager::println("Got Packet with: ");
+    if (!DebugManager::enabled()) return;
 
-    String string = String("Dest: ") + packet.dest +
-                    " Src: " + packet.src +
-                    " Type: " + packet.type +
-                    " Len: " + packet.len +
-                    " Data: ";
+    char buf[48];
+    snprintf(buf, sizeof(buf), "Pkt dst=%02X src=%02X t=%02X len=%u",
+             packet.dest, packet.src, packet.type, packet.len);
+    DebugManager::print(buf);
 
-    for(uint8_t i = 0; i < packet.len; i++) {
-        string += String(packet.data[i], HEX) + ", ";
+    for (uint8_t i = 0; i < packet.len && i < 8; i++) {
+        snprintf(buf, sizeof(buf), " %02X", packet.data[i]);
+        DebugManager::print(buf);
     }
-
-    DebugManager::println(string);
-    DebugManager::println("END OF MESSAGE");
+    DebugManager::println("");
 }
 
 void Protocol::handlePing(const Packet& packet) {
