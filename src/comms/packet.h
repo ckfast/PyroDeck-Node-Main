@@ -2,8 +2,13 @@
 #define PACKET_H
 
 #include <Arduino.h>
+#include <rs485.h>
+#include <crc.h>
 
-#include "../config/protocol_config.h"
+#include "config/settings.h"
+#include "config/protocol_config.h"
+
+
 
 struct Packet {
 
@@ -14,9 +19,10 @@ struct Packet {
     uint8_t len;
 
     uint8_t data[MAX_PAYLOAD_SIZE];
-
-    uint8_t crc;
 };
+
+const uint8_t PACKET_OVERHEAD_BYTES = 6; // start + dest + src + type + len + crc
+const uint8_t MAX_PACKET_SIZE = MAX_PAYLOAD_SIZE + PACKET_OVERHEAD_BYTES;
 
 uint8_t buildPacket(
     const Packet& pkt,
@@ -29,6 +35,30 @@ bool parsePacket(
     Packet& pkt
 );
 
+class packetParser {
+
+    public:
+
+        packetParser(RS485Bus& bus);
+
+        bool poll();
+
+        Packet getPacket();
+
+    private:
+
+        RS485Bus& bus;
+
+        uint8_t index = 0;
+
+        uint8_t buffer[MAX_PACKET_SIZE];
+
+        uint8_t expectedLength = 0;
+
+        Packet packet;
+
+        unsigned long timeoutCounter = 0;
+};
 
 
 #endif //PACKET_H

@@ -8,6 +8,7 @@ uint8_t calculateCRC(
     uint8_t crc = 0x00;
 
     for(uint8_t i = 0; i < length; i++) {
+        
         crc ^= data[i];
 
         for(uint8_t bit = 0; bit < 8; bit++) {

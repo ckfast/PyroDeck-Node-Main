@@ -8,7 +8,7 @@ class RS485Bus {
 
         RS485Bus(HardwareSerial& port, uint8_t dePin);
 
-        void begin(uint32_t baud);
+        void begin(uint32_t baud, uint16_t config = SERIAL_8N1);
 
         void sendByte(uint8_t byte);
 
@@ -17,12 +17,20 @@ class RS485Bus {
         bool available();
 
         uint8_t readByte();
+
+        void setBusClearTiming(uint16_t timeoutMs, uint16_t idleWindowMs);
     
     private:
 
         HardwareSerial* serial;
 
         uint8_t driverEnablePin;
+
+        uint16_t busClearTimeoutMs;
+
+        uint16_t busIdleWindowMs;
+
+        bool waitForBusClear();
 
         void setTransmitMode();
 

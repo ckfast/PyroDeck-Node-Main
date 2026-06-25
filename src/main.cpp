@@ -1,58 +1,50 @@
 #include "core/scheduler.h"
+#include "core/system_manager.h"
 #include "comms/protocol.h"
-//#include "display/oled.h"
-//#include "firing/continuity.h"
-//#include "safety/watchdog.h"
+#include "utils/debug.h"
+#include "safety/watchdog.h"
+#include "safety/faults.h"
 
 #include "config/settings.h"
 #include "config/pins.h"
 
+#include "ui/ui_handler.h"
+
 //for testing
-#include "comms/rs485.h"
-#include "comms/packet.h"
+#include "firing/firing.h"
 
+SystemManager controller;
+Protocol protocol(NODE_ID, controller);
+UIHandler ui;
 
-RS485Bus bus(RS485_SERIAL_PORT, RS485_DE_PIN);
-
-uint8_t buffer[MAX_PAYLOAD_SIZE + 5];
+uint8_t buffer[MAX_PAYLOAD_SIZE];
 
 void setup() {
+  // Initialize Serial for debugging
 
-  bus.begin(PROTOCOL_BAUD);
+  // Status LED Setup
+  pinMode(0, OUTPUT);
+  digitalWrite(0, HIGH);
 
-  Serial.begin(115200);
+  controller.begin();
+  protocol.begin();
 
-  Packet pkt;
-  pkt.dest = 0x00;
-  pkt.src = 2;
-  pkt.type = 4;
-  pkt.len=5;
-
-  for(int i = 0; i < 5; i++) {
-    pkt.data[i] = i;
-  }
-
-  buildPacket(pkt, buffer);
-
-  Packet decode;
-
-  Serial.println(parsePacket(buffer, 10, decode));
-
-  Serial.println("Parsed as: ");
-  Serial.println(decode.dest);
-  Serial.println(decode.src);
-  Serial.println(decode.type);
-  Serial.println(decode.len);
-
-  for(int i = 0; i < decode.len; i++) {
-    Serial.println(pkt.data[i]);
-  }
-
-  Serial.println();
-    
+  DebugManager::begin();
+  DebugManager::println("Node Started");
+  
+  // Initialize UI
+  ui.begin(&controller);
+  protocol.attachUI(&ui);
 }
 
 void loop() {
 
-    
+  protocol.update();
+
+  controller.update();
+  
+  // Update UI with current state
+  NodeState state = controller.getStatus();
+  ui.update(&state);
+
 }
