@@ -1,3 +1,5 @@
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5V3222BJU)
+
 ![PyroDeck](docs/images/pyrodeckbanner.png)
 
 ## PyroDeck Node
@@ -39,5 +41,5 @@ Pre-release / Development
 Not intended for production use.
 
 ##
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5V3222BJU)
+
 ![Dark PyroDeck Icon](docs/images/pyrodeckicondarksmall.png)
