@@ -40,6 +40,12 @@ pio run
 Pre-release / Development
 Not intended for production use.
 
+## To-Do
+- [ ] Maybe: LoRa Integration for wireless capabilities
+- [ ] Improved wired communication (Reduce packet loss)
+- [ ] Encrypted communication
+- [ ] Create docs 
+
 ##
 
 ![Dark PyroDeck Icon](docs/images/pyrodeckicondarksmall.png)
