@@ -1,0 +1,18 @@
+name: Notify PyroDeck
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Notify PyroDeck
+        env:
+          GH_TOKEN: ${{ secrets.PYRODECK_TOKEN }}
+        run: |
+          gh api repos/ckfast/PyroDeck/dispatches \
+            -f event_type=node-release \
+            -f client_payload[tag]=${{ github.event.release.tag_name }}
