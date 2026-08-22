@@ -5,6 +5,7 @@
 ## PyroDeck Node
 Open-source distributed fireworks firing system based on RS485.
 
+This repository is for the hardware and firmware for PyroDeck Node
 
 ## Features
 - Multi-node architecture
