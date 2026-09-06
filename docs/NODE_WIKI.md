@@ -38,7 +38,7 @@ PyroDeck Node is an ATmega1284P-based distributed fireworks firing node that com
 - Continuity inputs: `{24, 25, 26, 27, 28, 29, 30}`
 - Firing outputs: `{12, 13, 14, 1, 3, 23, 21}`
 
-> Note: `DISPLAY_SCL` and `RS485_DE_PIN` both map to pin `22`; `DISPLAY_SDA` and firing channel 6 both map to pin `23`. This may be intentional board multiplexing, but it needs hardware confirmation.
+> Current status: pin assignments in firmware overlap (`DISPLAY_SCL` with `RS485_DE_PIN` on `22`, and `DISPLAY_SDA` with firing channel 6 on `23`). In this repository, this is unresolved and should be treated as a hardware/firmware conflict until schematics or board-level mux/gating details confirm intended sharing.
 
 ## Firmware architecture
 ## 1) Startup and runtime loop
