@@ -112,7 +112,7 @@ Defaults:
 2. armed flag
 3. online flag
 4. UI brightness
-5. last error
+5. last error (`uint8`, 1 byte)
 6-9. continuity bitmask (little-endian uint32)
 10-13. firing bitmask (little-endian uint32)
 
