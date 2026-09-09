@@ -144,9 +144,9 @@ Defaults:
   - SystemError
 
 ### Heartbeat safety
-- Node is marked online when heartbeat received
+- Master is marked online when heartbeat received
 - If heartbeat lapses >3s:
-  - Node set offline
+  - Master set offline
   - Node disarmed
   - System fault recorded
 
