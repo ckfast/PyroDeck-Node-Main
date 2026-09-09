@@ -27,6 +27,9 @@ Coming Soon
 - MAX485
 - SSD1306 OLED Display
 
+## Documentation
+- [Node Wiki](docs/NODE_WIKI.md)
+
 ## Building
 1. Install PlatformIO
 2. Clone repository
